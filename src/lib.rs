@@ -4,11 +4,6 @@ mod faker;
 
 pg_module_magic!();
 
-#[pg_extern]
-fn hello_pg_faker() -> &'static str {
-    "Hello, pg_faker"
-}
-
 #[cfg(any(test, feature = "pg_test"))]
 mod tests {
     use pgx::*;
