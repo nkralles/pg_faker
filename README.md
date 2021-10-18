@@ -6,7 +6,7 @@ postgres faker data to produce usable test data inside postgres
 
 ## Usaged
 ### faker names
-```postgresql
+```sql
 -- random gendered 
 select faker_first_name(),faker_last_name();
 faker_first_name | faker_last_name 
