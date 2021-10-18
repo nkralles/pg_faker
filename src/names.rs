@@ -21,6 +21,9 @@ fn faker_first_name() -> &'static str {
     return faker_women_name();
 }
 
+/// ```funcname
+/// faker_first_name
+/// ```
 #[pg_extern]
 fn faker_first_name_with_seed(seed: i64) -> &'static str {
     let mut r = StdRng::seed_from_u64(seed as u64);
@@ -30,9 +33,29 @@ fn faker_first_name_with_seed(seed: i64) -> &'static str {
     return faker_women_name_with_seed(seed);
 }
 
+/// ```funcname
+/// faker_first_name
+/// ```
+#[pg_extern]
+fn faker_first_name_with_prob(probability_male: f64) -> &'static str {
+    check_valid_probability(probability_male);
+    let mut r = rand::thread_rng();
+    random_seeded_first_name_gendered(&mut r,probability_male)
+}
 
 /// ```funcname
 /// faker_first_name
+/// ```
+#[pg_extern]
+fn faker_first_name_with_seed_prob(seed: i64,probability_male: f64) -> &'static str {
+    check_valid_probability(probability_male);
+    let mut r = StdRng::seed_from_u64(seed as u64);
+    random_seeded_first_name_gendered(&mut r,probability_male)
+}
+
+
+/// ```funcname
+/// faker_first_names
 /// ```
 #[pg_extern]
 fn faker_first_name_with_seed_iter(
@@ -44,7 +67,7 @@ fn faker_first_name_with_seed_iter(
 }
 
 /// ```funcname
-/// faker_first_name
+/// faker_first_names
 /// ```
 #[pg_extern]
 fn faker_first_name_iter_with_probability(
@@ -58,7 +81,7 @@ fn faker_first_name_iter_with_probability(
 
 
 /// ```funcname
-/// faker_first_name
+/// faker_first_names
 /// ```
 #[pg_extern]
 fn faker_first_name_iter(
@@ -94,7 +117,7 @@ fn faker_full_name_with_seed(seed: i64) -> String {
 }
 
 /// ```funcname
-/// faker_full_name
+/// faker_full_names
 /// ```
 #[pg_extern]
 fn faker_full_name_with_seed_iter(
@@ -106,7 +129,7 @@ fn faker_full_name_with_seed_iter(
 }
 
 /// ```funcname
-/// faker_full_name
+/// faker_full_names
 /// ```
 #[pg_extern]
 fn faker_full_name_iter(
@@ -138,7 +161,7 @@ fn faker_mens_name_with_seed(seed: i64) -> &'static str {
 }
 
 /// ```funcname
-/// faker_mens_name
+/// faker_mens_names
 /// ```
 #[pg_extern]
 fn faker_mens_name_with_seed_iter(
@@ -150,7 +173,7 @@ fn faker_mens_name_with_seed_iter(
 }
 
 /// ```funcname
-/// faker_mens_name
+/// faker_mens_names
 /// ```
 #[pg_extern]
 fn faker_mens_name_iter(
@@ -175,7 +198,7 @@ fn faker_women_name_with_seed(seed: i64) -> &'static str {
 }
 
 /// ```funcname
-/// faker_women_name
+/// faker_women_names
 /// ```
 #[pg_extern]
 fn faker_women_name_with_seed_iter(
@@ -187,7 +210,7 @@ fn faker_women_name_with_seed_iter(
 }
 
 /// ```funcname
-/// faker_women_name
+/// faker_women_names
 /// ```
 #[pg_extern]
 fn faker_women_name_iter(
@@ -213,7 +236,7 @@ fn faker_last_name_with_seed(seed: i64) -> &'static str {
 
 
 /// ```funcname
-/// faker_last_name
+/// faker_last_names
 /// ```
 #[pg_extern]
 fn faker_last_name_with_seed_iter(
@@ -225,7 +248,7 @@ fn faker_last_name_with_seed_iter(
 }
 
 /// ```funcname
-/// faker_last_name
+/// faker_last_names
 /// ```
 #[pg_extern]
 fn faker_last_name_iter(
@@ -237,7 +260,7 @@ fn faker_last_name_iter(
 
 
 /// ```funcname
-/// faker_first_and_last_name
+/// faker_first_and_last_names
 /// ```
 #[pg_extern]
 fn faker_first_and_last_name_with_seed_iter(
@@ -249,7 +272,7 @@ fn faker_first_and_last_name_with_seed_iter(
 }
 
 /// ```funcname
-/// faker_first_and_last_name
+/// faker_first_and_last_names
 /// ```
 #[pg_extern]
 fn faker_first_and_last_name_iter(
