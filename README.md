@@ -57,3 +57,42 @@ index |    full_name
 
 ```
 
+## faker products
+
+#### sku numbers
+```sql
+-- pseudo product sku numbers  
+select * from faker_sku_number();
+ faker_sku_number 
+------------------
+ 2745-504-0516
+(1 row)
+
+-- custom regex expression, seed optional
+select faker_sku_number(
+               seed := 8675319,
+               regex := '97[89]-[0-9]{2,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]'
+           ) as internal_number;
+internal_number
+-------------------
+978-4582-1-0980-1
+(1 row)
+
+-- as a record
+
+select *
+from faker_sku_numbers(
+             num_rows := 4,
+             seed := 8675319,
+             regex := '97[89]-[0-9]{2,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]'
+         );
+index |      sku_number      
+-------+----------------------
+     1 | 978-4582-1-0980-1
+     2 | 979-224-32054-6-0
+     3 | 979-8115-7956291-1-3
+     4 | 978-20142-0199-891-7
+(4 rows)
+
+```
+
