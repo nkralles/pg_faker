@@ -1,6 +1,7 @@
 use pgx::*;
 
-mod faker;
+mod names;
+mod products;
 
 pg_module_magic!();
 

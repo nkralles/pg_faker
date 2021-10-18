@@ -18,6 +18,8 @@ pg_test = []
 pgx = "0.1.22"
 pgx-macros = "0.1.22"
 rand = "0.8.4"
+rand_regex = "0.15.1"
+regex-syntax = "0.6.25"
 
 [dev-dependencies]
 pgx-tests = "0.1.22"

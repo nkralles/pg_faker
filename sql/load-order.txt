@@ -1,1 +1,2 @@
-faker.generated.sql
+names.generated.sql
+products.generated.sql
