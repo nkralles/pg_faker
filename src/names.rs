@@ -40,17 +40,17 @@ fn faker_first_name_with_seed(seed: i64) -> &'static str {
 fn faker_first_name_with_prob(probability_male: f64) -> &'static str {
     check_valid_probability(probability_male);
     let mut r = rand::thread_rng();
-    random_seeded_first_name_gendered(&mut r,probability_male)
+    random_seeded_first_name_gendered(&mut r, probability_male)
 }
 
 /// ```funcname
 /// faker_first_name
 /// ```
 #[pg_extern]
-fn faker_first_name_with_seed_prob(seed: i64,probability_male: f64) -> &'static str {
+fn faker_first_name_with_seed_prob(seed: i64, probability_male: f64) -> &'static str {
     check_valid_probability(probability_male);
     let mut r = StdRng::seed_from_u64(seed as u64);
-    random_seeded_first_name_gendered(&mut r,probability_male)
+    random_seeded_first_name_gendered(&mut r, probability_male)
 }
 
 
@@ -204,7 +204,7 @@ fn faker_women_name_with_seed(seed: i64) -> &'static str {
 fn faker_women_name_with_seed_iter(
     num_rows: i32,
     seed: i64,
-) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(mens_name, &'static str))> {
+) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(women_name, &'static str))> {
     let mut r = StdRng::seed_from_u64(seed as u64);
     (1..=num_rows).map(move |i| (i, WOMEN_NAMES[r.gen_range(0..WOMEN_NAMES.len() - 1)]))
 }
@@ -215,7 +215,7 @@ fn faker_women_name_with_seed_iter(
 #[pg_extern]
 fn faker_women_name_iter(
     num_rows: i32,
-) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(mens_name, &'static str))> {
+) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(women_name, &'static str))> {
     let mut r = rand::thread_rng();
     (1..=num_rows).map(move |i| (i, WOMEN_NAMES[r.gen_range(0..WOMEN_NAMES.len() - 1)]))
 }
@@ -242,7 +242,7 @@ fn faker_last_name_with_seed(seed: i64) -> &'static str {
 fn faker_last_name_with_seed_iter(
     num_rows: i32,
     seed: i64,
-) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(mens_name, &'static str))> {
+) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(last_name, &'static str))> {
     let mut r = StdRng::seed_from_u64(seed as u64);
     (1..=num_rows).map(move |i| (i, LAST_NAMES[r.gen_range(0..LAST_NAMES.len() - 1)]))
 }
@@ -253,7 +253,7 @@ fn faker_last_name_with_seed_iter(
 #[pg_extern]
 fn faker_last_name_iter(
     num_rows: i32,
-) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(women_name, &'static str))> {
+) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(last_name, &'static str))> {
     let mut r = rand::thread_rng();
     (1..=num_rows).map(move |i| (i, LAST_NAMES[r.gen_range(0..LAST_NAMES.len() - 1)]))
 }
@@ -280,6 +280,33 @@ fn faker_first_and_last_name_iter(
 ) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(first_name, &'static str), name!(last_name, &'static str))> {
     let mut r = rand::thread_rng();
     (1..=num_rows).map(move |i| (i, random_seeded_first_name_gendered(&mut r, 0.5), get_seeded_value(&mut r, LAST_NAMES)))
+}
+
+/// ```funcname
+/// faker_first_and_last_names
+/// ```
+#[pg_extern]
+fn faker_first_and_last_name_with_seed_prob_iter(
+    num_rows: i32,
+    seed: i64,
+    probability_male: f64,
+) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(first_name, &'static str), name!(last_name, &'static str))> {
+    let mut r = StdRng::seed_from_u64(seed as u64);
+    check_valid_probability(probability_male);
+    (1..=num_rows).map(move |i| (i, random_seeded_first_name_gendered(&mut r, probability_male), get_seeded_value(&mut r, LAST_NAMES)))
+}
+
+/// ```funcname
+/// faker_first_and_last_names
+/// ```
+#[pg_extern]
+fn faker_first_and_last_name_with_prob_iter(
+    num_rows: i32,
+    probability_male: f64,
+) -> impl std::iter::Iterator<Item=(name!(index, i32), name!(first_name, &'static str), name!(last_name, &'static str))> {
+    let mut r = rand::thread_rng();
+    check_valid_probability(probability_male);
+    (1..=num_rows).map(move |i| (i, random_seeded_first_name_gendered(&mut r, probability_male), get_seeded_value(&mut r, LAST_NAMES)))
 }
 
 
